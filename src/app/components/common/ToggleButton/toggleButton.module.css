@@ -1,0 +1,30 @@
+.toggleButton {
+  padding: 3px 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  border: none;
+}
+
+.active {
+  background-color: #000;
+  color: #d0d7ce;
+}
+
+.inactive {
+  background-color: #c7c7c7;
+  color: #000;
+}
+
+.about-active {
+  font-style: italic;
+}
+
+/* .button {
+  padding: 10px 20px;
+  background-color: var(--button-background-color);
+  color: var(--button-text-color);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+} */

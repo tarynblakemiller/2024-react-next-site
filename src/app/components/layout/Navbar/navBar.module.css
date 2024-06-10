@@ -1,0 +1,10 @@
+.navBar {
+  display: flex;
+  padding-top: 20px;
+  gap: 10px;
+  padding-bottom: 0px;
+}
+
+.italic {
+  font-style: italic;
+}

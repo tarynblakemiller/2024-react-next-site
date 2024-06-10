@@ -1,95 +1,96 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
+import styles from "../app/styles/style.module.css";
+import { Navbar } from "./components/layout/Navbar/Navbar";
+import React, { useState, useEffect } from "react";
+import Footer from "./components/layout/Footer/Footer";
 
-export default function Home() {
+interface Props {}
+
+const indexes: number[] = [1, 4, 5];
+
+const sections = [
+  { name: "software", index: 1 },
+  { name: "sound", index: 4 },
+  { name: "lighting", index: 5 },
+];
+
+const Home: React.FC<Props> = () => {
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [activeSection, setActiveSection] = useState<string | null>(null);
+  const [activeStates, setActiveStates] = useState<{ [key: string]: boolean }>({
+    software: false,
+    sound: false,
+    lighting: false,
+  });
+
+  const [isAtBottom, setIsAtBottom] = useState(false);
+
+  const handleToggle = (sectionName: string, index: number) => {
+    const newActiveStates = sections.reduce((acc, section) => {
+      acc[section.name] = section.name === sectionName;
+      return acc;
+    }, {} as { [key: string]: boolean });
+
+    setActiveStates(newActiveStates);
+    setActiveIndex(index);
+    setActiveSection(sectionName);
+  };
+
+  const handleNavbarClick = (section: string, index: number) => {
+    setActiveIndex(index);
+    setActiveSection(section);
+    handleToggle(section, index);
+  };
+
+  const handleFooterClick = (section: string, index: number) => {
+    setActiveIndex(index);
+    setActiveSection(section);
+    handleToggle(section, index);
+  };
+
+  const handleScroll = () => {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+      setIsAtBottom(true);
+    } else {
+      setIsAtBottom(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const [themeValue, setThemeValue] = useState<"light" | "dark">("light");
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <div className={styles.container}>
+      <div>
+        <Navbar activeIndexes={indexes} onButtonClick={handleNavbarClick} />
+
+        <main className={styles.main}></main>
+        <div className={styles.flexContainer}></div>
+        <a className={styles.email} href="mailto:webmaster@example.com">
+          yourfriendtaryn@gmail.com
+        </a>
+      </div>
+      <hr className={styles.hr} />
+      {Array.from({ length: 50 }).map((_, i) => (
+        <div key={i} style={{ height: "100px", border: "1px solid black" }}>
+          Dummy Content {i + 1}
         </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+      ))}
+      <Footer
+        activeIndex={activeIndex}
+        activeSection={activeSection}
+        onSectionClick={handleNavbarClick}
+        onFooterClick={handleFooterClick}
+        isAtBottom={isAtBottom}
+      />
+    </div>
   );
-}
+};
+
+export default Home;
