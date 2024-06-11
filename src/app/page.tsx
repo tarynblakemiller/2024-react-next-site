@@ -3,6 +3,9 @@ import styles from "../app/styles/style.module.css";
 import { Navbar, NavbarContext } from "./components/layout/Navbar/Navbar";
 import React, { useState, useEffect } from "react";
 import Footer from "./components/layout/Footer/Footer";
+import { useRouter, usePathname } from "next/navigation";
+import { RouteChangeListener } from "./RouteChangeListener";
+import BioPage from "./components/Bio/BioPage";
 
 interface Props {}
 
@@ -24,6 +27,7 @@ const Home: React.FC<Props> = () => {
   });
   const [isItalic, setIsItalic] = useState(false);
   const [isAtBottom, setIsAtBottom] = useState(false);
+  const [showBio, setShowBio] = useState(false);
 
   const handleToggle = (sectionName: string, index: number) => {
     const newActiveStates = sections.reduce((acc, section) => {
@@ -34,6 +38,7 @@ const Home: React.FC<Props> = () => {
     setActiveStates(newActiveStates);
     setActiveIndex(index);
     setActiveSection(sectionName);
+    setShowBio(true);
   };
 
   const handleNavbarClick = (section: string, index: number) => {
@@ -75,24 +80,27 @@ const Home: React.FC<Props> = () => {
         setActiveSection,
         isItalic,
         setIsItalic,
+        showBio,
+        setShowBio,
       }}
     >
       <div className={styles.container}>
         <div>
           <Navbar activeIndexes={indexes} onButtonClick={handleNavbarClick} />
-
-          <main className={styles.main}></main>
           <div className={styles.flexContainer}></div>
           <a className={styles.email} href="mailto:webmaster@example.com">
             yourfriendtaryn@gmail.com
           </a>
+          <hr className={styles.hr} />
         </div>
-        <hr className={styles.hr} />
-        {Array.from({ length: 50 }).map((_, i) => (
-          <div key={i} style={{ height: "100px", border: "1px solid black" }}>
-            Dummy Content {i + 1}
-          </div>
-        ))}
+        <main className={styles.main}>
+          {showBio ? <BioPage /> : <></>}
+          {Array.from({ length: 50 }).map((_, i) => (
+            <div key={i} style={{ height: "100px", border: "1px solid black" }}>
+              Dummy Content {i + 1}
+            </div>
+          ))}
+        </main>
         <Footer
           activeIndex={activeIndex}
           activeSection={activeSection}

@@ -26,6 +26,8 @@ export const NavbarContext = createContext<{
   setIsItalic: React.Dispatch<React.SetStateAction<boolean>>;
   activeSection: string | null;
   setActiveSection: Dispatch<SetStateAction<string | null>>;
+  showBio: boolean;
+  setShowBio: React.Dispatch<React.SetStateAction<boolean>>;
 }>({
   activeStates: { software: false, sound: false, lighting: false },
   setActiveStates: () => {},
@@ -35,6 +37,8 @@ export const NavbarContext = createContext<{
   setActiveSection: () => {},
   isItalic: false,
   setIsItalic: () => {},
+  showBio: false,
+  setShowBio: () => {},
 });
 const sections = [
   { name: "software", index: 1 },
@@ -53,10 +57,9 @@ export const Navbar: React.FC<NavbarProps> = ({
     setActiveIndex,
     isItalic,
     setIsItalic,
+    showBio,
+    setShowBio,
   } = useContext(NavbarContext);
-
-  // const [activeIndex, setActiveIndex] = useState<number>(-1);
-  // const [isItalic, setIsItalic] = useState(false);
 
   const handleToggle = (sectionName: string, index: number) => {
     const newActiveStates = sections.reduce((acc, section) => {
@@ -70,34 +73,38 @@ export const Navbar: React.FC<NavbarProps> = ({
     setIsItalic(false);
   };
 
+  const toggleBioPage = () => {
+    if (!showBio) {
+      window.history.pushState(null, "Bio", "/bio");
+    } else {
+      window.history.pushState(null, "Home", "/");
+    }
+  };
+
   const toggleItalic = () => {
     setIsItalic((prev) => !prev);
+
     resetSectionButtonStates();
+    setShowBio(!showBio);
+    toggleBioPage();
   };
 
   const resetSectionButtonStates = () => {
+    window.history.pushState(null, "Home", "/");
     setActiveStates({
       software: false,
       sound: false,
       lighting: false,
     });
+
     setActiveIndex(-1);
   };
 
   return (
     <>
-      {/* <NavbarContext.Provider
-        value={{
-          activeIndex,
-          setActiveIndex,
-          activeStates,
-          setActiveStates,
-          isItalic,
-          setIsItalic,
-        }}
-      > */}
       <Bio
         onClick={toggleItalic}
+        showBio={showBio}
         isItalic={isItalic}
         resetSectionButtonStates={resetSectionButtonStates}
       />
@@ -107,6 +114,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           CV{" "}
         </a>
       )}
+
       <div className={styles.navBar}>
         {sections
           .filter((section) => activeIndexes.includes(section.index))
@@ -120,7 +128,6 @@ export const Navbar: React.FC<NavbarProps> = ({
             />
           ))}
       </div>
-      {/* </NavbarContext.Provider> */}
     </>
   );
 };

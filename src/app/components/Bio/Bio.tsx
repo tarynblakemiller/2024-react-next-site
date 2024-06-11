@@ -3,6 +3,7 @@ import React from "react";
 interface BioProps {
   onClick: () => void;
   isItalic: boolean;
+  showBio: boolean;
   style?: React.CSSProperties;
   resetSectionButtonStates: () => void;
 }

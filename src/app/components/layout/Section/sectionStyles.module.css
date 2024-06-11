@@ -1,0 +1,29 @@
+.sectionWrapper {
+  .p {
+    font-size: 16px;
+    padding: 10px 0 5px 0px;
+    text-decoration: none;
+  }
+}
+
+.sectionContainer {
+  width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+
+  .hr {
+    border-top: 1px solid black;
+    border-bottom: none;
+    margin-top: 40px;
+    width: 100%;
+  }
+
+  .content-wrapper {
+    width: 100%;
+  }
+}
+
+.paragraphWrapper {
+  font-size: 16px;
+  padding: 4px;
+}
