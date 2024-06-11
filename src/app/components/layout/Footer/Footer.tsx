@@ -1,8 +1,9 @@
 import React, { ReactNode } from "react";
 import { FooterButton } from "../../common/FooterButton/FooterButton";
 import { NavbarContext } from "../Navbar/Navbar";
-import { useContext } from "react";
+import { useContext, useRef, useState, useEffect } from "react";
 import footerStyles from "./footerStyles.module.css";
+import { sections } from "@/app/page";
 // import { ThemeContext } from "@/app/context/ThemeContext";
 
 const links = [
@@ -15,29 +16,26 @@ const links = [
 
 export interface FooterProps {
   activeIndex: number | null;
-  isActive?: boolean;
   onSectionClick: (section: string, index: number) => void;
   onFooterClick: (section: string, index: number) => void;
-  activeText?: string;
-  inactiveText?: string;
   activeSection: string | null;
   isAtBottom: boolean;
 }
 
 const Footer: React.FC<FooterProps> = ({
   activeIndex,
-  onSectionClick,
   onFooterClick,
-  activeSection,
+  onSectionClick,
   isAtBottom,
+  activeSection,
 }) => {
   const { activeStates } = useContext(NavbarContext);
-
-  // const { themeValue, setThemeValue } = useContext(ThemeContext);
+  const [hasFooterButtonsRendered, setHasFooterButtonsRendered] =
+    useState(false);
+  const activeIndexRef = useRef<number | null>(activeIndex);
+  const activeSectionRef = useRef<string | null>(activeSection);
 
   const renderFooterLinks = () => {
-    //passing context
-    //const {} = useContext(ThemeContext) and import at the top
     return links.map((link, index) => (
       <div className={footerStyles.footerButtonWrapper} key={index}>
         <a className={footerStyles.footerAnchor} href={link.url}>
@@ -46,53 +44,86 @@ const Footer: React.FC<FooterProps> = ({
       </div>
     ));
   };
+
+  activeIndexRef.current = activeIndex;
+  activeSectionRef.current = activeSection;
+
   const renderSectionButtons = () => {
+    let buttonsToRender: { name: string; index: number }[] = [];
     if (!isAtBottom) {
       return null;
-    } else if (isAtBottom && !activeSection) {
-      activeIndex = 10;
+    } else if (activeSectionRef.current) {
+      // If scrolled to bottom and an active section exists, filter out the active section
+      buttonsToRender = sections.filter(
+        (section) => section.name !== activeSectionRef.current
+      );
+    } else {
+      // If not at the bottom or no active section, render the appropriate sections based on activeIndex
+      switch (activeIndexRef.current) {
+        case 1:
+          buttonsToRender = [
+            { name: "sound", index: 1 },
+            { name: "lighting", index: 2 },
+          ];
+          break;
+        case 4:
+          buttonsToRender = [
+            { name: "software", index: 0 },
+            { name: "lighting", index: 2 },
+          ];
+          break;
+        case 5:
+          buttonsToRender = [
+            { name: "software", index: 0 },
+            { name: "sound", index: 1 },
+          ];
+          break;
+        default:
+          buttonsToRender = [
+            { name: "software", index: 0 },
+            { name: "sound", index: 1 },
+            { name: "lighting", index: 2 },
+          ];
+          break;
+      }
     }
-    let buttonsToRender: string[] = [];
-    switch (activeIndex) {
-      case 1:
-        buttonsToRender = ["sound", "lighting"];
-        break;
-      case 4:
-        buttonsToRender = ["software", "lighting"];
-        break;
-      case 5:
-        buttonsToRender = ["software", "sound"];
-        break;
-      case 10:
-        buttonsToRender = ["software", "sound", "lighting"];
-      default:
-        break;
-    }
+
     return buttonsToRender.map((section, index) => (
       <FooterButton
         key={index}
-        onClick={() => onFooterClick(section, index)}
-        activeText={section}
-        sectionName={section}
-        index={index}
-        activeSection={section}
-        inactiveText={section}
-        isActive={activeStates[section]}
-        activeIndex={index}
+        onClick={() => {
+          onFooterClick(section.name, section.index);
+          onSectionClick(section.name, section.index);
+          setHasFooterButtonsRendered(true);
+        }}
+        activeText={section.name}
+        sectionName={section.name}
+        index={section.index}
+        activeSection={section.name}
+        inactiveText={section.name}
+        isActive={activeStates[section.index]}
+        activeIndex={section.index}
       />
     ));
   };
-
+  useEffect(() => {
+    // Reset hasFooterButtonsRendered when isAtBottom becomes false
+    if (!isAtBottom) {
+      setHasFooterButtonsRendered(false);
+    }
+  }, [isAtBottom]);
   return (
     <div className={footerStyles.footerContainer}>
       <div className={footerStyles.footerInnerContainer}>
         {renderFooterLinks()}
       </div>
-      <div className={footerStyles.footerInnerSectionContainer}>
-        <div className={footerStyles.footerSectionButton}>
-          {renderSectionButtons()}
+      {isAtBottom && !hasFooterButtonsRendered && (
+        <div className={footerStyles.footerInnerSectionContainer}>
+          <div className={footerStyles.footerSectionButton}>
+            {renderSectionButtons()}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

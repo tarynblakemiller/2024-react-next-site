@@ -1,4 +1,10 @@
-import React, { useState, createContext, useContext } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  Dispatch,
+  SetStateAction,
+} from "react";
 import { ToggleButton } from "../../common/ToggleButton/ToggleButton";
 import styles from "./navBar.module.css";
 import cvStyles from "../../../styles/style.module.css";
@@ -18,15 +24,18 @@ export const NavbarContext = createContext<{
   setActiveIndex: React.Dispatch<React.SetStateAction<number>>;
   isItalic: boolean;
   setIsItalic: React.Dispatch<React.SetStateAction<boolean>>;
+  activeSection: string | null;
+  setActiveSection: Dispatch<SetStateAction<string | null>>;
 }>({
-  activeStates: {},
+  activeStates: { software: false, sound: false, lighting: false },
   setActiveStates: () => {},
   activeIndex: -1,
   setActiveIndex: () => {},
+  activeSection: null,
+  setActiveSection: () => {},
   isItalic: false,
   setIsItalic: () => {},
 });
-
 const sections = [
   { name: "software", index: 1 },
   { name: "sound", index: 4 },
@@ -37,14 +46,17 @@ export const Navbar: React.FC<NavbarProps> = ({
   activeIndexes,
   onButtonClick,
 }) => {
-  const [activeStates, setActiveStates] = useState<{ [key: string]: boolean }>({
-    software: false,
-    sound: false,
-    lighting: false,
-  });
+  const {
+    activeStates,
+    setActiveStates,
+    activeIndex,
+    setActiveIndex,
+    isItalic,
+    setIsItalic,
+  } = useContext(NavbarContext);
 
-  const [activeIndex, setActiveIndex] = useState<number>(-1);
-  const [isItalic, setIsItalic] = useState(false);
+  // const [activeIndex, setActiveIndex] = useState<number>(-1);
+  // const [isItalic, setIsItalic] = useState(false);
 
   const handleToggle = (sectionName: string, index: number) => {
     const newActiveStates = sections.reduce((acc, section) => {
@@ -74,7 +86,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <>
-      <NavbarContext.Provider
+      {/* <NavbarContext.Provider
         value={{
           activeIndex,
           setActiveIndex,
@@ -83,32 +95,32 @@ export const Navbar: React.FC<NavbarProps> = ({
           isItalic,
           setIsItalic,
         }}
-      >
-        <Bio
-          onClick={toggleItalic}
-          isItalic={isItalic}
-          resetSectionButtonStates={resetSectionButtonStates}
-        />
-        {isItalic && (
-          <a className={cvStyles.CV} href="/CV.pdf" download="CV.pdf">
-            {" "}
-            CV{" "}
-          </a>
-        )}
-        <div className={styles.navBar}>
-          {sections
-            .filter((section) => activeIndexes.includes(section.index))
-            .map((section) => (
-              <ToggleButton
-                key={section.name}
-                isActive={activeStates[section.name]}
-                onToggle={() => handleToggle(section.name, section.index)}
-                activeText={`${section.name}`}
-                inactiveText={`${section.name}`}
-              />
-            ))}
-        </div>
-      </NavbarContext.Provider>
+      > */}
+      <Bio
+        onClick={toggleItalic}
+        isItalic={isItalic}
+        resetSectionButtonStates={resetSectionButtonStates}
+      />
+      {isItalic && (
+        <a className={cvStyles.CV} href="/CV.pdf" download="CV.pdf">
+          {" "}
+          CV{" "}
+        </a>
+      )}
+      <div className={styles.navBar}>
+        {sections
+          .filter((section) => activeIndexes.includes(section.index))
+          .map((section) => (
+            <ToggleButton
+              key={section.name}
+              isActive={activeStates[section.name]}
+              onToggle={() => handleToggle(section.name, section.index)}
+              activeText={`${section.name}`}
+              inactiveText={`${section.name}`}
+            />
+          ))}
+      </div>
+      {/* </NavbarContext.Provider> */}
     </>
   );
 };

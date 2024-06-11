@@ -21,12 +21,9 @@ export const FooterButton: React.FC<FooterButtonProps> = ({
   onClick,
   activeText,
   inactiveText,
-  sectionName,
   index,
 }) => {
   return (
-    // <div className={footerStyles.footerContainer}>
-    // <div className={footerStyles.footerInnerContainer}>
     <div>
       <button
         className={`${footerStyles.footerSectionButton} ${
@@ -37,6 +34,5 @@ export const FooterButton: React.FC<FooterButtonProps> = ({
         {isActive ? activeText : inactiveText}
       </button>
     </div>
-    // </div>
   );
 };
