@@ -1,15 +1,15 @@
 "use client";
-import React, { useState, useEffect, useContext, ReactNode } from "react";
-import { ToggleButton } from "../common/ToggleButton/ToggleButton";
-import Footer from "./Footer/Footer";
-import { NavbarContext, NavbarProvider } from "@/app/context/NavbarContext";
+import { NavbarContext } from "@/app/context/NavbarContext";
+import React, { useEffect, useState } from "react";
 import styles from "../../styles/style.module.css";
-import { Bio } from "../Bio/Bio";
+import Footer from "./Footer/Footer";
 import { Navbar } from "./Navbar/Navbar";
+import SectionTemplate, { sectionComponents } from "./Section/Section";
 
-export const indexes = [1, 4, 5];
+export const indexes = [0, 1, 4, 5];
 
 export const sections = [
+  { name: "bio", index: 0 },
   { name: "software", index: 1 },
   { name: "sound", index: 4 },
   { name: "lighting", index: 5 },
@@ -17,8 +17,6 @@ export const sections = [
 
 const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [activeIndex, setActiveIndex] = useState<number>(-1);
-  const [isItalic, setIsItalic] = useState<boolean>(false);
-  const [showBio, setShowBio] = useState<boolean>(false);
   const [activeSection, setActiveSection] = useState<string | null>(null);
   const [activeStates, setActiveStates] = useState<{ [key: string]: boolean }>({
     software: false,
@@ -27,6 +25,7 @@ const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   });
 
   const [isAtBottom, setIsAtBottom] = useState<boolean>(false);
+  const [isItalic, setIsItalic] = useState<boolean>(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -51,37 +50,11 @@ const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     setActiveStates(newActiveStates);
     setActiveIndex(index);
     setActiveSection(sectionName);
-    setIsItalic(false);
-    setShowBio(true);
+    setIsItalic(sectionName === "bio");
   };
 
   const handleNavbarClick = (section: string, index: number) => {
     handleToggle(section, index);
-  };
-
-  const toggleBioPage = () => {
-    if (!showBio) {
-      window.history.pushState(null, "Bio", "/bio");
-    } else {
-      window.history.pushState(null, "Home", "/");
-    }
-  };
-
-  const toggleItalic = () => {
-    setIsItalic((prev) => !prev);
-    resetSectionButtonStates();
-    setShowBio(!showBio);
-    toggleBioPage();
-  };
-
-  const resetSectionButtonStates = () => {
-    window.history.pushState(null, "Home", "/");
-    setActiveStates({
-      software: false,
-      sound: false,
-      lighting: false,
-    });
-    setActiveIndex(-1);
   };
 
   const handleFooterClick = (sectionName: string, index: number) => {
@@ -102,20 +75,26 @@ const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         setActiveSection,
         isItalic,
         setIsItalic,
-        showBio,
-        setShowBio,
       }}
     >
       <div className={styles.container}>
         <div>
-          <Navbar activeIndexes={indexes} onButtonClick={handleNavbarClick} />
+          <Navbar
+            activeIndexes={indexes}
+            onButtonClick={handleNavbarClick}
+            isItalic={isItalic}
+            setIsItalic={setIsItalic}
+          />
           <div className={styles.flexContainer}></div>
           <a className={styles.email} href="mailto:webmaster@example.com">
             yourfriendtaryn@gmail.com
           </a>
           <hr className={styles.hr} />
         </div>
-        <main className={styles.main}>{children}</main>
+        <main className={styles.main}>
+          <SectionTemplate />
+          {children}
+        </main>
         <Footer
           activeIndex={activeIndex}
           onSectionClick={handleNavbarClick}

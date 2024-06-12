@@ -15,8 +15,6 @@ export const NavbarContext = createContext<{
   setIsItalic: Dispatch<SetStateAction<boolean>>;
   activeSection: string | null;
   setActiveSection: Dispatch<SetStateAction<string | null>>;
-  showBio: boolean;
-  setShowBio: Dispatch<SetStateAction<boolean>>;
   // isAtBottom: boolean;
   // setIsAtBottom: Dispatch<SetStateAction<boolean>>;
 }>({
@@ -28,8 +26,6 @@ export const NavbarContext = createContext<{
   setActiveSection: () => {},
   isItalic: false,
   setIsItalic: () => {},
-  showBio: false,
-  setShowBio: () => {},
 });
 
 export const NavbarProvider: React.FC<{ children: React.ReactNode }> = ({
@@ -43,7 +39,6 @@ export const NavbarProvider: React.FC<{ children: React.ReactNode }> = ({
   const [activeIndex, setActiveIndex] = useState<number>(-1);
   const [isItalic, setIsItalic] = useState<boolean>(false);
   const [activeSection, setActiveSection] = useState<string | null>(null);
-  const [showBio, setShowBio] = useState<boolean>(false);
 
   return (
     <NavbarContext.Provider
@@ -56,8 +51,6 @@ export const NavbarProvider: React.FC<{ children: React.ReactNode }> = ({
         setIsItalic,
         activeSection,
         setActiveSection,
-        showBio,
-        setShowBio,
       }}
     >
       {children}

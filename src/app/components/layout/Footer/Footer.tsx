@@ -20,6 +20,7 @@ export interface FooterProps {
   onFooterClick: (section: string, index: number) => void;
   activeSection: string | null;
   isAtBottom: boolean;
+  // showBio: boolean;
 }
 
 const Footer: React.FC<FooterProps> = ({
@@ -56,27 +57,27 @@ const Footer: React.FC<FooterProps> = ({
       switch (activeIndex) {
         case 1:
           buttonsToRender = [
-            { name: "sound", index: 1 },
-            { name: "lighting", index: 2 },
+            { name: "sound", index: 4 },
+            { name: "lighting", index: 5 },
           ];
           break;
         case 4:
           buttonsToRender = [
-            { name: "software", index: 0 },
-            { name: "lighting", index: 2 },
+            { name: "software", index: 1 },
+            { name: "lighting", index: 5 },
           ];
           break;
         case 5:
           buttonsToRender = [
-            { name: "software", index: 0 },
-            { name: "sound", index: 1 },
+            { name: "software", index: 1 },
+            { name: "sound", index: 4 },
           ];
           break;
         default:
           buttonsToRender = [
-            { name: "software", index: 0 },
-            { name: "sound", index: 1 },
-            { name: "lighting", index: 2 },
+            { name: "software", index: 1 },
+            { name: "sound", index: 4 },
+            { name: "lighting", index: 5 },
           ];
           break;
       }
@@ -95,11 +96,11 @@ const Footer: React.FC<FooterProps> = ({
         isActive={activeSection === section.name}
         inactiveText={section.name}
         activeIndex={section.index}
+        // showBio={showBio}
       />
     ));
   };
   useEffect(() => {
-    // Reset hasFooterButtonsRendered when isAtBottom becomes false
     if (!isAtBottom) {
       setHasFooterButtonsRendered(false);
     }

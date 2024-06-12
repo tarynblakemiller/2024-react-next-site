@@ -1,32 +1,20 @@
-import React, { useContext } from "react";
-import { NavbarContext } from "@/app/context/NavbarContext";
-import footerButtonStyles from "../ToggleButton/toggleButton.module.css";
+import React from "react";
+import { ToggleButton } from "../ToggleButton/ToggleButton";
 
-export interface FooterButtonProps {
+export const FooterButton: React.FC<{
   isActive: boolean;
   onClick: () => void;
   activeText: string;
   inactiveText: string;
   sectionName: string;
   activeIndex: number;
-}
-
-export const FooterButton: React.FC<FooterButtonProps> = ({
-  isActive,
-  onClick,
-  activeText,
-  inactiveText,
-}) => {
-  const { activeSection } = useContext(NavbarContext);
-
+}> = ({ isActive, onClick, activeText, inactiveText }) => {
   return (
-    <button
-      className={`${footerButtonStyles.footerSectionButton} ${
-        isActive ? footerButtonStyles.active : footerButtonStyles.inactive
-      }`}
-      onClick={() => onClick()}
-    >
-      {isActive ? activeText : inactiveText}
-    </button>
+    <ToggleButton
+      isActive={isActive}
+      onToggle={onClick}
+      activeText={activeText}
+      inactiveText={inactiveText}
+    />
   );
 };

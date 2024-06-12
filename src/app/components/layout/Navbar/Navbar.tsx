@@ -8,6 +8,8 @@ import { NavbarContext } from "@/app/context/NavbarContext";
 interface NavbarProps {
   activeIndexes: number[];
   onButtonClick: (section: string, index: number) => void;
+  isItalic: boolean; // Receive isItalic prop
+  setIsItalic: (value: boolean) => void;
 }
 
 const sections = [
@@ -19,16 +21,14 @@ const sections = [
 export const Navbar: React.FC<NavbarProps> = ({
   activeIndexes,
   onButtonClick,
+  isItalic,
+  setIsItalic,
 }) => {
   const {
     activeStates,
     setActiveStates,
     activeIndex,
     setActiveIndex,
-    isItalic,
-    setIsItalic,
-    showBio,
-    setShowBio,
     activeSection,
     setActiveSection,
   } = useContext(NavbarContext);
@@ -36,7 +36,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   console.log("activeStates:", activeStates);
   console.log("activeIndex:", activeIndex);
   console.log("isItalic:", isItalic);
-  console.log("showBio:", showBio);
+
   console.log("activeSection:", activeSection);
 
   const handleToggle = (sectionName: string, index: number) => {
@@ -48,33 +48,28 @@ export const Navbar: React.FC<NavbarProps> = ({
     setActiveStates(newActiveStates);
     setActiveIndex(index);
     setActiveSection(sectionName);
-    setIsItalic(false);
+    setIsItalic(sectionName === "bio");
   };
 
   const handleNavbarClick = (section: string, index: number) => {
     setActiveIndex(index);
-    setShowBio(false);
     handleToggle(section, index);
   };
 
-  const toggleBioPage = () => {
-    if (showBio === false) {
-      window.history.pushState(null, "Bio", "/bio");
-    } else {
-      window.history.pushState(null, "Home", "/");
-    }
-  };
-
-  const toggleItalic = () => {
-    setIsItalic((prev) => !prev);
-
-    resetSectionButtonStates();
-    setShowBio(!showBio);
-    toggleBioPage();
+  const handleBioClick = () => {
+    // setIsItalic(true); // Set isItalic to true when Bio is clicked
+    // // Reset other active sections
+    setActiveStates({
+      software: false,
+      sound: false,
+      lighting: false,
+    });
+    setActiveIndex(0); // Reset active index
+    setActiveSection("bio"); // Set active section to bio
   };
 
   const resetSectionButtonStates = () => {
-    window.history.pushState(null, "Home", "/");
+    // window.history.pushState(null, "Home", "/");
     setActiveStates({
       software: false,
       sound: false,
@@ -87,11 +82,22 @@ export const Navbar: React.FC<NavbarProps> = ({
   return (
     <>
       <Bio
-        onClick={toggleItalic}
-        showBio={showBio}
+        onClick={() => {
+          const newIsItalic = !isItalic;
+          setIsItalic(newIsItalic);
+          if (newIsItalic) {
+            resetSectionButtonStates();
+            handleToggle("bio", 0);
+          } else {
+            setActiveSection(null);
+            setActiveIndex(-1);
+          }
+        }}
         isItalic={isItalic}
         resetSectionButtonStates={resetSectionButtonStates}
+        isActive={isItalic}
       />
+
       {isItalic && (
         <a className={cvStyles.CV} href="/CV.pdf" download="CV.pdf">
           {" "}
