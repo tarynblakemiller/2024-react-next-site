@@ -2,9 +2,11 @@
 import { NavbarContext } from "@/app/context/NavbarContext";
 import React, { useEffect, useState } from "react";
 import styles from "../../styles/style.module.css";
-import Footer from "./Footer/Footer";
-import { Navbar } from "./Navbar/Navbar";
-import SectionTemplate, { sectionComponents } from "./Section/Section";
+import Footer from "./footer/Footer";
+import { Navbar } from "./navbar/Navbar";
+import SectionTemplate, {
+  sectionComponents,
+} from "../sections/sectionTemplate/Section";
 
 export const indexes = [0, 1, 4, 5];
 

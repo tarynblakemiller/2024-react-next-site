@@ -1,5 +1,5 @@
 import React from "react";
-import aboutStyle from "../layout/Section/sectionStyles.module.css";
+import aboutStyle from "../sections.module.css";
 
 const BioPage = () => {
   return (

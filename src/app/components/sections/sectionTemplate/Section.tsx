@@ -4,8 +4,8 @@ import SoftwareMain from "../../sections/software/SoftwareMain";
 import SoundMain from "../../sections/sound/SoundMain";
 import LightingMain from "../../sections/lighting/LightingMain";
 import { NavbarContext } from "@/app/context/NavbarContext";
-import BioPage from "../../Bio/BioPage";
-import { Bio } from "../../Bio/Bio";
+import BioPage from "../../sections/bio/BioPage";
+import { Bio } from "../../sections/bio/Bio";
 
 interface SectionComponents {
   [key: string]: React.ComponentType<any>;

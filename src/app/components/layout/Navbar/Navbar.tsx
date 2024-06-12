@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { ToggleButton } from "../../common/ToggleButton/ToggleButton";
 import styles from "./navBar.module.css";
 import cvStyles from "../../../styles/style.module.css";
-import { Bio } from "../../Bio/Bio";
+import { Bio } from "../../sections/bio/Bio";
 import { NavbarContext } from "@/app/context/NavbarContext";
 
 interface NavbarProps {

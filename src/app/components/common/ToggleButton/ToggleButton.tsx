@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./toggleButton.module.css";
-import { useTheme } from "@/app/context/Providers/ThemeProvider";
+import { useTheme } from "@/app/context/providers/ThemeProvider";
 
 interface ToggleButtonProps {
   isActive?: boolean;
