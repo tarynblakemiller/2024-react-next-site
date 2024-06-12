@@ -9,7 +9,7 @@ interface ToggleButtonProps {
   inactiveText?: string;
   isAboutActive?: boolean;
   activeIndex?: number;
-  activeSection?: string;
+  activeSection?: string | null;
 }
 
 export const ToggleButton: React.FC<ToggleButtonProps> = ({

@@ -8,17 +8,15 @@ import React, {
 
 export const NavbarContext = createContext<{
   activeStates: { [key: string]: boolean };
-  setActiveStates: React.Dispatch<
-    React.SetStateAction<{ [key: string]: boolean }>
-  >;
+  setActiveStates: Dispatch<SetStateAction<{ [key: string]: boolean }>>;
   activeIndex: number;
-  setActiveIndex: React.Dispatch<React.SetStateAction<number>>;
+  setActiveIndex: Dispatch<SetStateAction<number>>;
   isItalic: boolean;
-  setIsItalic: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsItalic: Dispatch<SetStateAction<boolean>>;
   activeSection: string | null;
   setActiveSection: Dispatch<SetStateAction<string | null>>;
   showBio: boolean;
-  setShowBio: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowBio: Dispatch<SetStateAction<boolean>>;
   // isAtBottom: boolean;
   // setIsAtBottom: Dispatch<SetStateAction<boolean>>;
 }>({

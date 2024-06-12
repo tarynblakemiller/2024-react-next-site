@@ -49,17 +49,16 @@ export const Navbar: React.FC<NavbarProps> = ({
     setActiveIndex(index);
     setActiveSection(sectionName);
     setIsItalic(false);
-    // setShowBio(!showBio);
-    // toggleBioPage();
   };
 
   const handleNavbarClick = (section: string, index: number) => {
     setActiveIndex(index);
+    setShowBio(false);
     handleToggle(section, index);
   };
 
   const toggleBioPage = () => {
-    if (!showBio) {
+    if (showBio === false) {
       window.history.pushState(null, "Bio", "/bio");
     } else {
       window.history.pushState(null, "Home", "/");
@@ -110,14 +109,10 @@ export const Navbar: React.FC<NavbarProps> = ({
               onToggle={() => handleNavbarClick(section.name, section.index)}
               activeText={`${section.name}`}
               inactiveText={`${section.name}`}
+              activeSection={activeSection}
             />
           ))}
       </div>
-      <div className={styles.flexContainer}></div>
-      <a className={styles.email} href="mailto:webmaster@example.com">
-        yourfriendtaryn@gmail.com
-      </a>
-      <hr className={styles.hr} />
     </>
   );
 };

@@ -1,19 +1,14 @@
-import React, { ReactNode, useContext } from "react";
-import styles from "../ToggleButton/toggleButton.module.css";
-import footerStyles from "../../../components/layout/Footer/footerStyles.module.css";
+import React, { useContext } from "react";
 import { NavbarContext } from "@/app/context/NavbarContext";
+import footerButtonStyles from "../ToggleButton/toggleButton.module.css";
 
-interface FooterButtonProps {
-  isActive?: boolean;
+export interface FooterButtonProps {
+  isActive: boolean;
   onClick: () => void;
-  activeText?: string;
-  inactiveText?: string;
-  isAboutActive?: boolean;
-  activeIndex?: number;
-  activeSection?: string;
-  children?: ReactNode;
+  activeText: string;
+  inactiveText: string;
   sectionName: string;
-  index: number;
+  activeIndex: number;
 }
 
 export const FooterButton: React.FC<FooterButtonProps> = ({
@@ -21,18 +16,17 @@ export const FooterButton: React.FC<FooterButtonProps> = ({
   onClick,
   activeText,
   inactiveText,
-  index,
 }) => {
+  const { activeSection } = useContext(NavbarContext);
+
   return (
-    <div>
-      <button
-        className={`${footerStyles.footerSectionButton} ${
-          isActive ? styles.active : styles.inactive
-        }`}
-        onClick={() => onClick()}
-      >
-        {isActive ? activeText : inactiveText}
-      </button>
-    </div>
+    <button
+      className={`${footerButtonStyles.footerSectionButton} ${
+        isActive ? footerButtonStyles.active : footerButtonStyles.inactive
+      }`}
+      onClick={() => onClick()}
+    >
+      {isActive ? activeText : inactiveText}
+    </button>
   );
 };

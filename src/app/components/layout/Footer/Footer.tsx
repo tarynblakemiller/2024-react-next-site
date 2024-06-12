@@ -33,9 +33,6 @@ const Footer: React.FC<FooterProps> = ({
   const [hasFooterButtonsRendered, setHasFooterButtonsRendered] =
     useState(false);
 
-  // const activeIndexRef = useRef<number | null>(activeIndex);
-  // const activeSectionRef = useRef<string | null>(activeSection);
-
   const renderFooterLinks = () => {
     return links.map((link, index) => (
       <div className={footerStyles.footerButtonWrapper} key={index}>
@@ -45,9 +42,6 @@ const Footer: React.FC<FooterProps> = ({
       </div>
     ));
   };
-
-  // activeIndexRef.current = activeIndex;
-  // activeSectionRef.current = activeSection;
 
   const renderSectionButtons = () => {
     let buttonsToRender: { name: string; index: number }[] = [];
@@ -98,8 +92,7 @@ const Footer: React.FC<FooterProps> = ({
         }}
         activeText={section.name}
         sectionName={section.name}
-        index={section.index}
-        activeSection={activeSection}
+        isActive={activeSection === section.name}
         inactiveText={section.name}
         activeIndex={section.index}
       />
