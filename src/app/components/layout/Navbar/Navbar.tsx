@@ -1,45 +1,15 @@
-import React, {
-  createContext,
-  useContext,
-  useState,
-  Dispatch,
-  SetStateAction,
-} from "react";
+import React, { useContext } from "react";
 import { ToggleButton } from "../../common/ToggleButton/ToggleButton";
 import styles from "./navBar.module.css";
 import cvStyles from "../../../styles/style.module.css";
 import { Bio } from "../../Bio/Bio";
+import { NavbarContext } from "@/app/context/NavbarContext";
 
 interface NavbarProps {
   activeIndexes: number[];
   onButtonClick: (section: string, index: number) => void;
 }
 
-export const NavbarContext = createContext<{
-  activeStates: { [key: string]: boolean };
-  setActiveStates: React.Dispatch<
-    React.SetStateAction<{ [key: string]: boolean }>
-  >;
-  activeIndex: number;
-  setActiveIndex: React.Dispatch<React.SetStateAction<number>>;
-  isItalic: boolean;
-  setIsItalic: React.Dispatch<React.SetStateAction<boolean>>;
-  activeSection: string | null;
-  setActiveSection: Dispatch<SetStateAction<string | null>>;
-  showBio: boolean;
-  setShowBio: React.Dispatch<React.SetStateAction<boolean>>;
-}>({
-  activeStates: { software: false, sound: false, lighting: false },
-  setActiveStates: () => {},
-  activeIndex: -1,
-  setActiveIndex: () => {},
-  activeSection: null,
-  setActiveSection: () => {},
-  isItalic: false,
-  setIsItalic: () => {},
-  showBio: false,
-  setShowBio: () => {},
-});
 const sections = [
   { name: "software", index: 1 },
   { name: "sound", index: 4 },
@@ -59,7 +29,15 @@ export const Navbar: React.FC<NavbarProps> = ({
     setIsItalic,
     showBio,
     setShowBio,
+    activeSection,
+    setActiveSection,
   } = useContext(NavbarContext);
+
+  console.log("activeStates:", activeStates);
+  console.log("activeIndex:", activeIndex);
+  console.log("isItalic:", isItalic);
+  console.log("showBio:", showBio);
+  console.log("activeSection:", activeSection);
 
   const handleToggle = (sectionName: string, index: number) => {
     const newActiveStates = sections.reduce((acc, section) => {
@@ -69,8 +47,15 @@ export const Navbar: React.FC<NavbarProps> = ({
 
     setActiveStates(newActiveStates);
     setActiveIndex(index);
-    onButtonClick(sectionName, index);
+    setActiveSection(sectionName);
     setIsItalic(false);
+    // setShowBio(!showBio);
+    // toggleBioPage();
+  };
+
+  const handleNavbarClick = (section: string, index: number) => {
+    setActiveIndex(index);
+    handleToggle(section, index);
   };
 
   const toggleBioPage = () => {
@@ -122,12 +107,17 @@ export const Navbar: React.FC<NavbarProps> = ({
             <ToggleButton
               key={section.name}
               isActive={activeStates[section.name]}
-              onToggle={() => handleToggle(section.name, section.index)}
+              onToggle={() => handleNavbarClick(section.name, section.index)}
               activeText={`${section.name}`}
               inactiveText={`${section.name}`}
             />
           ))}
       </div>
+      <div className={styles.flexContainer}></div>
+      <a className={styles.email} href="mailto:webmaster@example.com">
+        yourfriendtaryn@gmail.com
+      </a>
+      <hr className={styles.hr} />
     </>
   );
 };

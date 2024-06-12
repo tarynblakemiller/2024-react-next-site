@@ -1,7 +1,7 @@
 import React, { ReactNode, useContext } from "react";
 import styles from "../ToggleButton/toggleButton.module.css";
 import footerStyles from "../../../components/layout/Footer/footerStyles.module.css";
-import { Navbar, NavbarContext } from "../../layout/Navbar/Navbar";
+import { NavbarContext } from "@/app/context/NavbarContext";
 
 interface FooterButtonProps {
   isActive?: boolean;

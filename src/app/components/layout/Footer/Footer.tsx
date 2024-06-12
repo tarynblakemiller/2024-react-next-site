@@ -1,9 +1,9 @@
 import React, { ReactNode } from "react";
 import { FooterButton } from "../../common/FooterButton/FooterButton";
-import { NavbarContext } from "../Navbar/Navbar";
+import { NavbarContext } from "@/app/context/NavbarContext";
 import { useContext, useRef, useState, useEffect } from "react";
 import footerStyles from "./footerStyles.module.css";
-import { sections } from "@/app/page";
+import { sections } from "../Layout";
 // import { ThemeContext } from "@/app/context/ThemeContext";
 
 const links = [
@@ -32,8 +32,9 @@ const Footer: React.FC<FooterProps> = ({
   const { activeStates } = useContext(NavbarContext);
   const [hasFooterButtonsRendered, setHasFooterButtonsRendered] =
     useState(false);
-  const activeIndexRef = useRef<number | null>(activeIndex);
-  const activeSectionRef = useRef<string | null>(activeSection);
+
+  // const activeIndexRef = useRef<number | null>(activeIndex);
+  // const activeSectionRef = useRef<string | null>(activeSection);
 
   const renderFooterLinks = () => {
     return links.map((link, index) => (
@@ -45,21 +46,20 @@ const Footer: React.FC<FooterProps> = ({
     ));
   };
 
-  activeIndexRef.current = activeIndex;
-  activeSectionRef.current = activeSection;
+  // activeIndexRef.current = activeIndex;
+  // activeSectionRef.current = activeSection;
 
   const renderSectionButtons = () => {
     let buttonsToRender: { name: string; index: number }[] = [];
     if (!isAtBottom) {
       return null;
-    } else if (activeSectionRef.current) {
-      // If scrolled to bottom and an active section exists, filter out the active section
+    } else if (activeSection) {
       buttonsToRender = sections.filter(
-        (section) => section.name !== activeSectionRef.current
+        (section) => section.name !== activeSection
       );
     } else {
       // If not at the bottom or no active section, render the appropriate sections based on activeIndex
-      switch (activeIndexRef.current) {
+      switch (activeIndex) {
         case 1:
           buttonsToRender = [
             { name: "sound", index: 1 },
@@ -99,9 +99,8 @@ const Footer: React.FC<FooterProps> = ({
         activeText={section.name}
         sectionName={section.name}
         index={section.index}
-        activeSection={section.name}
+        activeSection={activeSection}
         inactiveText={section.name}
-        isActive={activeStates[section.index]}
         activeIndex={section.index}
       />
     ));
