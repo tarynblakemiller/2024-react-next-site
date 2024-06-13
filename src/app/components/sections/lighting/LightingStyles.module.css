@@ -1,0 +1,39 @@
+.lightingContainer {
+  .p {
+    font-size: 16px;
+    padding: 10px 0 5px 0px;
+    text-decoration: none;
+  }
+}
+
+.sectionContainer {
+  width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+
+  .hr {
+    border-top: 1px solid black;
+    border-bottom: none;
+    margin-top: 40px;
+    width: 100%;
+  }
+
+  .content-wrapper {
+    width: 100%;
+    margin-top: 20px;
+    width: 100%;
+    font-size: 16px;
+  }
+}
+
+.sectionImageContainer {
+  bottom: 0;
+  position: relative;
+  margin-top: 8rem;
+}
+
+.carouselContainer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}

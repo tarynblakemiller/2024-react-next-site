@@ -79,22 +79,20 @@ const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         setIsItalic,
       }}
     >
-      <div className={styles.container}>
-        <div>
+      <div>
+        <div className={styles.navBar}>
           <Navbar
             activeIndexes={indexes}
             onButtonClick={handleNavbarClick}
             isItalic={isItalic}
             setIsItalic={setIsItalic}
           />
-          <div className={styles.flexContainer}></div>
-          <a className={styles.email} href="mailto:webmaster@example.com">
-            yourfriendtaryn@gmail.com
-          </a>
+
           <hr className={styles.hr} />
         </div>
-        <main className={styles.main}>
+        <main>
           <SectionTemplate />
+
           {children}
         </main>
         <Footer

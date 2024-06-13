@@ -48,23 +48,6 @@
   flex: 1;
 }
 
-.flexContainer {
-  display: flex;
-  margin-top: 20px;
-  padding-left: 0px;
-  gap: 9px;
-}
-
-.flexContainer :global(a) {
-  color: black;
-  text-decoration: none;
-}
-
-.flexContainer :global(a:visited) {
-  color: black;
-  text-decoration: none;
-}
-
 .email {
   text-decoration: none;
   color: black;

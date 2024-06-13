@@ -1,10 +1,63 @@
-.navBar {
+.navbarContainer {
   display: flex;
-  padding-top: 20px;
+  flex-direction: row;
   gap: 10px;
-  padding-bottom: 0px;
+  margin-top: 20px;
+  /* margin-bottom: 20px; */
+  width: 100%;
+  font-size: 16px;
+}
+.navbarContainer2 {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin-top: 20px;
+  /* margin-bottom: 20px; */
+  width: 100%;
+  font-size: 16px;
 }
 
+.navBar {
+  display: flex;
+}
+
+.nav-container {
+  display: flex;
+  font-size: 16px;
+  margin-top: 0;
+  gap: 10px;
+}
 .italic {
   font-style: italic;
+}
+
+.subSectionButton {
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  border: none;
+}
+
+/* .subSectionButton:hover {
+  background-color: #e0e0e0;
+} */
+
+.flex-container {
+  display: flex;
+  padding-left: 0px;
+  gap: 9px;
+}
+.flex-container2 {
+  display: flex;
+  flex-direction: row;
+  gap: 9px;
+  /* margin: 20px 0; */
+  width: 100%;
+  font-size: 16px;
+}
+
+.email {
+  text-decoration: none;
+  color: black;
+  margin-top: 20px;
 }

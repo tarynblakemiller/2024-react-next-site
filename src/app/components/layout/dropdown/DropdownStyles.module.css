@@ -1,0 +1,45 @@
+.borderWrapper {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  width: 100%;
+  /* ${(props) => props.$customStyle && { ...props.$customStyle }}; */
+}
+
+.dropDownContainerWrapper {
+  cursor: pointer;
+  display: flex;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  max-width: 300px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3px 4px 3px 4px;
+  /* border: ${(props) => */
+  /* props.$isOpen ? "1px solid black" : "2px dotted black"}; */
+  /* // width: 100%; */
+  box-sizing: border-box;
+  /* // background-color: ${(props) => (props.$isOpen ? "#000" : "transparent")};
+  // color: ${(props) => (props.$isOpen ? "#d0d7ce" : "#000")}; */
+}
+
+/* export const ArrowIcon = styled.div<{ $isOpen: boolean }>` */
+.arrowIcon {
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  /* // color: ${(props) => (props.$isOpen ? "#C7C7C7" : "#000")}; */
+  /* // background-color: ${(props) => (props.$isOpen ? "#000" : "transparent")}; */
+  width: 8px;
+  height: 8px;
+}
+
+.itemList {
+  font-size: 16px;
+  /* // border: 1px solid black; */
+  list-style-type: none;
+  padding: 10px;
+  max-width: 300px;
+  height: 100%;
+}

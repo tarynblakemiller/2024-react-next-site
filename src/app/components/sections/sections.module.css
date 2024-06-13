@@ -60,3 +60,8 @@
     margin-bottom: 0;
   }
 }
+
+.sectionImageBlock {
+  position: relative;
+  margin: 0 auto;
+}

@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { FooterButton } from "../../common/FooterButton/FooterButton";
+import { FooterButton } from "../../common/buttons/FooterButton/FooterButton";
 import { NavbarContext } from "@/app/context/NavbarContext";
 import { useContext, useRef, useState, useEffect } from "react";
 import footerStyles from "./footerStyles.module.css";

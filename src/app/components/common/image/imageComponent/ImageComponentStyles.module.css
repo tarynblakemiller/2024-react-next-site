@@ -1,0 +1,6 @@
+.imageContainer {
+  box-sizing: border-box; /* Ensure padding is included in the width calculation */
+  display: flex;
+  width: 100%; /* Full width */
+  height: auto;
+}

@@ -1,5 +1,5 @@
 import React from "react";
-import { ToggleButton } from "../ToggleButton/ToggleButton";
+import { ToggleButton } from "../../ToggleButton/ToggleButton";
 
 export const FooterButton: React.FC<{
   isActive: boolean;

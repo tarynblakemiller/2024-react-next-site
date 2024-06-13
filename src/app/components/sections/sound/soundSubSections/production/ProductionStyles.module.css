@@ -1,0 +1,29 @@
+.productionContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  font-size: 16px;
+}
+
+.hr {
+  border-top: 1px solid black;
+  border-bottom: none;
+  width: 100%;
+  margin-top: 40px;
+}
+
+.trackSectionParagraph {
+  font-size: 16px;
+}
+
+.styledTextSection {
+  width: 300px;
+  justify-content: center;
+}
+
+.soundProductionButtonWrapper {
+  border: 1px solid black;
+  background-color: #c7c7c7;
+  padding: 3px 5px 3px 5px;
+  font-size: 16px;
+}
